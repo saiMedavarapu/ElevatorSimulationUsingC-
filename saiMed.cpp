@@ -19,7 +19,8 @@ ostream& bold_off(std::ostream& os)
 
 int main()
 {
-    int noOfFloors , elevatorSize = 10,  initialLoc= 5, noOfReq[10], toFloor[10], numbOfReq,cnt[numbOfReq];
+    int noOfFloors , elevatorSize = 10,  initialLoc= 5, noOfReq[10], toFloor[10], numbOfReq;
+    int *cnt, *floors;
     float time_travel[5], totalTime = 0;
     float timeToMove;
     /*
@@ -31,11 +32,12 @@ int main()
     */
    cout<<"The total number of floors.\n";
    cin>>noOfFloors;
-  
+   floors = new int[noOfFloors];
   cout<<"Elevator Size?\n";
      cin>> elevatorSize;
 cout<<"How many number of requests"<<endl;
 cin>>numbOfReq;
+     cnt = new int[numbOfReq];
      cout<<"What is The time it takes to move between two floors?(in seconds)\n";
      cin>> timeToMove;
 cout<<"What is the initial location of the elevator?\n";
@@ -61,7 +63,7 @@ cout<<"From   "<<"To"<<endl;
 
 
 
-  cout<<"--------------Algorithm 1 - FCFS -------------\n"; 
+  cout<<"--------------Algorithm 1 - FCFS - Queuebased -------------\n"; 
  //Algorithm 1 
   for(int i=0;i<numbOfReq;i++)
   {
@@ -74,39 +76,43 @@ cout<<bold_on<<"Total Time to travel in seconds is : "<<totalTime<<bold_off<<end
 
 
 
-  cout<<"--------------Algorithm 2 - Go to highest first and pick on the go -------------\n";  
+  cout<<"------------------Algorithm 2 - Go to highest first and pick on the go -------------\n";  
   //Algorithm2
 
-for (int i=0;i<numbOfReq-1;i++) {
-        int count=1;
-        for (int j=i+1;j<numbOfReq;j++) { 
-            if (noOfReq[i]==noOfReq[j]) 
-            {count++;
-            cnt[j-1]=count;
-            }
-        }
-        cout<<"There is a request from floor "<<noOfReq[i]<<" by "<<count<<" persons"<<"\n";
-    }
-cout<<"Count elements are \n";
+for (int i=0;i<numbOfReq;i++) {
+        floors[i] = 0;
+       for (int j=0;j<numbOfReq;j++) { 
+      if(noOfReq[j]==i)
+      {
+        floors[i]++;
+      }
+       }
+} 
+      
+   for(int i = 0; i < numbOfReq; i++)
+{
+  cout<< floors[i];
+}   
+       
 for(int i = 0; i < numbOfReq; i++)
 {
-  cout<< cnt[i];
+  //cout<< cnt[i];
 }
 
 
-int largest = cnt[0];
+/*int largest = cnt[0];
+int highRequests = 0;
    for(int i = 1;i < numbOfReq; i++) {
-      /* We are comparing largest variable with every element
-       * of array. If there is an element which is greater than
-       * largest variable value then we are copying that variable
-       * to largest, this way we have the largest element copied
-       * to the variable named "largest" at the end of the loop 
-       *
-       */
-      if(largest <cnt[i])
+      
+      if(largest <=cnt[i])
+         {
          largest = cnt[i];
-   } 
-cout<<"At floor"<<largest<<"there are more number of requests"<<endl;
+          highRequests = noOfReq[i]; 
+          //cout<<"highRequests is :"<< highRequests<<endl;
+          } 
+   }
+
+cout<<"At floor"<<highRequests<<"there are more number of requests"<<endl;*/
 
 return 0;
 }
