@@ -37,8 +37,8 @@ cin>>numbOfReq;
      cnt = new int[numbOfReq];
      cout<<"What is The time it takes to move between two floors?(in seconds)\n";
      cin>> timeToMove;
-//cout<<"What is the initial location of the elevator?\n";
-  //  cin>>initialLoc;
+cout<<"What is the initial location of the elevator?\n";
+    cin>>initialLoc;
 
 cout<<"------------Generated Floor requests are---------------\n";
      
