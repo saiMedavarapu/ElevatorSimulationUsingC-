@@ -20,7 +20,7 @@ c. For each algorithm, you should log the order in which the requests have been 
 Explanation: 
 
 NOTE: If you have an issue with max_element() 
-    Include the <algorithm>  headerfile.
+    Include the algorithm  headerfile.
 
 Algorithm1:
 •	Serves the requests based on the First come first serve.
