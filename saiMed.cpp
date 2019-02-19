@@ -20,8 +20,9 @@ ostream& bold_off(std::ostream& os)
 int main()
 {
     int noOfFloors , elevatorSize = 10,  initialLoc= 5, noOfReq[100000], toFloor[100000], numbOfReq;
-    int *cnt, *floors, *priorityFloorIndex ;
+    int *cnt, *floors, *priorityFloorIndex, *servingFloorAlg2 ;
     float time_travel[100000], totalTime = 0;
+    float time_travel2[100000], totalTime2 = 0;
     float timeToMove;
    
 
@@ -62,16 +63,16 @@ cout<<"From   "<<"To"<<endl;
  //Algorithm 1 
   for(int i=0;i<numbOfReq;i++)
   {
-  time_travel[i] = (noOfReq[i]-toFloor[i]) * timeToMove;
-  cout<<"Time to travel from floor No:"<<noOfReq[i]<<" to floor:"<<toFloor[i] <<" is = "<<fabs(time_travel[i])<<" Seconds"<<endl;
-  totalTime=totalTime+fabs(time_travel[i]);
+  time_travel[i] = fabs(noOfReq[i]-toFloor[i]) * timeToMove;
+  cout<<"Time to travel from floor No:"<<noOfReq[i]<<" to floor:"<<toFloor[i] <<" is = "<<(time_travel[i])<<" Seconds"<<endl;
+  totalTime=totalTime+time_travel[i];
   }
   cout<<"---------------------------\n";  
-cout<<bold_on<<"Total Time to travel in seconds is : "<<totalTime<<bold_off<<endl;
+cout<<bold_on<<"\033[1;31m Total Time to travel in seconds using Algorithm 1 is : "<<totalTime<<"\033[0m"<<endl;
 
 
 
-  cout<<"------------------Algorithm 2 - Check the floor with high number of requests -------------\n";  
+cout<<"--------------------------Algorithm 2 - Check the floor with high number of requests -------------\n";  
   //Algorithm2
 //This array stores requests from each floor.
 for (int i=0;i<numbOfReq;i++) {
@@ -91,13 +92,13 @@ for (int i=0;i<numbOfReq;i++) {
   }   
 
 
-//Finding the index of the highest repetetive element - Which lets you find busiest floor.
-int priorityFloor = max_element(floors, floors + numbOfReq) - floors;
-cout<<endl;
-  cout << "Floor which has more number of people is : "
-       << priorityFloor << endl;
+//----Finding the index of the highest repetetive element - Which lets you find busiest floor.*********
+    int priorityFloor = max_element(floors, floors + numbOfReq) - floors;
+    cout<<endl;
+      cout << "Floor which has more number of people is : "
+          << priorityFloor << endl;
 
-// Implementing search to find the index of priority floor 
+// ****************Implementing search to find the index of priority floor *******************
 
       priorityFloorIndex = new int[numbOfReq];//Array to hold index values of repetitive element.
       int v= 0; //index variable for priorityFloorIndex
@@ -109,13 +110,54 @@ cout<<endl;
             v++;
           }
         }
-//Printing out the indexes of the repetetive values.
+//**************Printing out the indexes of the repetetive values*************************
 
-for(int i=0;i<v;i++)
-{
-  cout<<"Index values are : "<< priorityFloorIndex[i]<<"  "<<endl;
-}
-//Now that we have index values, lets serve the requests from that floor.
+servingFloorAlg2 = new int[numbOfReq];
+
+    for(int i=0;i<v;i++)
+    {
+      cout<<"Index values are : "<< priorityFloorIndex[i]<<"  "<<"and the requested floor is: ";
+      for(int j=0; j<numbOfReq;j++)
+      {
+        if(priorityFloorIndex[i]== j)
+        {
+          servingFloorAlg2[i] = toFloor[j];
+          cout<<servingFloorAlg2[i]<<endl;
+        }
+      }
+    }
+//*************Now that we have index values, lets serve the requests for that floor *************
+    for(int i=0; i<numbOfReq; i++)
+    {
+      for(int j=0; j<v;j++)
+      {
+        if(i==priorityFloorIndex[j])
+        {
+          time_travel2[j] = fabs(priorityFloor-servingFloorAlg2[j]) * timeToMove;
+          cout<<"Floor : "<<servingFloorAlg2[j]<< " is served with time : "<< time_travel2[j]<<" Seconds"<<endl;
+         totalTime2=totalTime2+time_travel2[j];
+        }
+      }
+    }
+//For rest of the requests.
+cout<<"*******************"<<endl;
+    for(int i=0; i<numbOfReq; i++)
+    {
+     
+        if(i==servingFloorAlg2[0]|| i==servingFloorAlg2[1]|| i==servingFloorAlg2[2]|| i==servingFloorAlg2[3] || i==servingFloorAlg2[4])
+        {
+          continue;
+        }
+        else
+        {
+          //cout<<"i value is "<<i <<endl;
+          time_travel2[i] = fabs(noOfReq[i]-toFloor[i]) * timeToMove;
+          cout<<"Time to travel from floor No:"<<noOfReq[i]<<" to floor:"<<toFloor[i] <<" is = "<<(time_travel2[i])<<" Seconds"<<endl;
+          totalTime2=totalTime2+time_travel2[i];
+        }
+      
+    }
+    cout<<"\033[1;31mTotal time taken to serve the entire requests by using Algorithm 2 is : "<< totalTime2<<"\033[0m"<<endl;
 
 
 return 0;
