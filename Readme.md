@@ -14,4 +14,4 @@ a. Your code should randomly generate a number of requests.
 
 b. Design and implement three diﬀerent algorithms to simulate the elevator movement in order to response to the requests.
 
-c. For each algorithm, you should log the order in which the requests have been served, the time it takes to serve each request, and total time it takes to serve all requests.
+c. For each algorithm, you should log the order in which the requests have been served, the time it takes to serve each request, and total time it takes to serve all requests..
